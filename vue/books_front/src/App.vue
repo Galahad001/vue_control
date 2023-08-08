@@ -20,7 +20,8 @@ import MainHeader from './components/MainHeader.vue';
 
 <style scoped>
 #test{
-  width: 100%;
+  width: 90%;
+  margin: auto;
 }
 
 </style>

@@ -1,42 +1,123 @@
 <template>
-        <div class="post" v-for="post in posts" :key="post.id">
-            <h1>{{ post.title }}</h1>
-            <p v-if="seen">{{ post.content }}</p>
-            <p>{{ post.author }}</p>
-            <p>{{ post.time_create }}</p>
-            <button @click="seenFunc">Скрыть</button>
+
+    <div class="books">
+
+        <div class="post" v-for="post in bookStore.posts" :key="post.index">
+
+            <img class="images" :src="`${post.path_to_photo}`" :alt="`${post.title}`">
+
+            <div class="book_title">
+                <h1><RouterLink class="props-book" @click="bookStore.prop(post.index)" to='/books/about'>{{ post.title }}</RouterLink></h1>
+                <p v-if="post.visibility" class="book_content">{{ post.content }}</p>
+                <p class="author">Автор: {{ post.author }}</p>
+                <p class="date">Дата первой публикации: {{ post.the_year_of_publishing }}</p>
+
+                <div class="div-btn">
+                    <button class="btn" @click="bookStore.seen(post.index)">Показать</button>
+                    <button class="btn" @click="bookStore.noSeen(post.index)">Скрыть</button>
+                </div>
+
+            </div>
+
         </div>
+        
+    </div>
+
 </template>
 
 <script>
+import AboutComponent from '../components/AboutComponent.vue';
+import { RouterLink, RouterView } from 'vue-router'
+import { useBookStore } from '../stores/bookStore'
     export default {
-        data () {    // Переменные
-            return {
-                posts: [ ],
-                seen:true
-            }
-        },
-        async mounted() { // Компонент монтирован
-            const data = await fetch('http://127.0.0.1:8000/api/book/v1')
-            this.posts = await data.json()
-        },
-        methods:{
-            seenFunc(){
-                    this.seen = !this.seen
-            }
-        }
-    }
+    data() {
+        return {
+            posts: [],
+            bookStore: useBookStore()
+        };
+    },
+    async mounted() {
+        this.bookStore.book_data_api();
+    },
+    components: { RouterView, AboutComponent }
+}
 </script>
 
 <style scoped>
+.books{
+padding: 10px;
+}
+.images{
+    width: 250px;
+    height: 300px;
+    object-fit: contain;
+    border-radius: 22%;
+}
 .post{
-  width: 100%;
-  padding: 5px 15px 5px 10px;
+  width: auto;
+  padding: 10px 15px 10px 15px;
   text-align: justify;
   height: max-content;
   margin-top: 10px;
-  background-color: rgb(179, 130, 58);
+  background-color: rgba(150, 136, 102, 0.9);
   color: rgb(0, 0, 0);
+  display: grid;
+  grid-template-columns:200px 1fr;
+  column-gap: 50px;
+  border-radius: 20px;
+}
+.props-book{
+    text-decoration: none;
+    color: #e2dc88;
+}
+
+.props-book:hover{
+    opacity: 0.8;
+    color: #c9c6a4;
+    transition: 0.5s;
+}
+.book_content{
+    font-size: 20px;
+    text-align: justify;
+    font-family: sans-serif;
+}
+
+.author{
+    font-size: 18 px;
+    font-weight: bold;
+}
+
+.book_title{
+    display: flexbox;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.date{
+    font-size: 18 px;
+    font-weight: bold; 
+}
+
+.div-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn{
+    border: none;
+    width: 100px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+.btn:hover {
+    opacity: 0.8;
+    background-color: rgb(243, 236, 132);
+    transition: 0.5s;
 }
 
 </style>

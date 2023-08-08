@@ -1,17 +1,29 @@
 <template>
-  <div>
-    Home
-    {{ bookStore.test }}
-    <button @click="bookStore.d">+</button>
+
+  <div class="plans">
+    <h1>Здравствуйте!</h1>
+    <p>Этот скромный сайт был создан в учебных целях.</p>
+    <p>Хоть и функционал этого сайта пока мал (а может его и вообще нету, завист от версии которую вы смотрите).</p>
+    <p>Но со времением будут добавлятся новые возможности...(наверное...)</p>
+    <p>Вот текущий перечень что я постораюсь добавить в проект:</p>
+    <ul>
+      <li>UI компоненты</li>
+      <li>Форма для создание поста и сохранение его в БД</li>
+      <li>Удаление постов из БД</li>
+      <li>Регистрацию и разграничение пользователей</li>
+      <li>Возможность коментирования зарегистрированным пользователям</li>
+      <li>Адаптация под мобильные устройства, планшеты, ноутбуки, компьютеры</li>
+      <li>Различные улучшения по стилевому оформлению сайта</li>
+      <li>Может будут выполнены работы со сторонним API</li>
+    </ul>
   </div>
+
 </template>
 
 <script>
-import { useBookStore } from '../stores/counter';
   export default {
     data(){
       return{
-        bookStore: useBookStore()
       }
     }
     
@@ -19,5 +31,19 @@ import { useBookStore } from '../stores/counter';
 </script>
 
 <style scoped>
+.plans{
+  background-color: rgba(73, 68, 62, 0.8);
+  color: blanchedalmond;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: justify;
+  font-size: 20px;
+  font-family: sans-serif;
+}
+
+.plans>h1{
+  text-align: center;
+}
 
 </style>

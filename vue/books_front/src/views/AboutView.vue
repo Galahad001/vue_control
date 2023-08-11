@@ -1,8 +1,8 @@
 <template>
 
-    <div class="test" v-for="post in bookStore.posts_filter">
+    <div class="test">
         <AboutComponent
-            :post="post"
+            :post="bookStore.post_pk"
         />
     </div>
     

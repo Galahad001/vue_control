@@ -7,7 +7,9 @@
             <img class="images" :src="`${post.path_to_photo}`" :alt="`${post.title}`">
 
             <div class="book_title">
-                <h1><RouterLink class="props-book" @click="bookStore.prop(post.index)" to='/books/about'>{{ post.title }}</RouterLink></h1>
+
+                <h1><RouterLink class="props-book" @click="bookStore.test(post.pk)" to='/books/about'>{{ post.title }}</RouterLink></h1>
+                <!-- <h1><RouterLink class="props-book" @click="bookStore.prop(post.index)" to='/books/about'>{{ post.title }}</RouterLink></h1> -->
                 <p v-if="post.visibility" class="book_content">{{ post.content }}</p>
                 <p class="author">Автор: {{ post.author }}</p>
                 <p class="date">Дата первой публикации: {{ post.the_year_of_publishing }}</p>

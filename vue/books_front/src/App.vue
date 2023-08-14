@@ -1,10 +1,10 @@
 <template>
-  <div>
+
     <MainHeader/>
     <div id='test'>
       <RouterView />
     </div>
-  </div>
+
 </template>
 
 <script>

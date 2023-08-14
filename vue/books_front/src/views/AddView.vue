@@ -1,36 +1,54 @@
 <template>
-    <div>
-        <form @submit.prevent>
-            <!-- <input type="text" v-model="title">
-            <input type="text" v-model="content">
-            <input type="text" v-model="author">
-            <input type="text" v-model="path_to_photo">
-            <input type="text" v-model="the_year_of_publishing">
-            <input type="text" v-model="cat"> -->
-            <button @click="addPost(add)">Добавить</button>
+
+        <form class="f_inp" @submit.prevent >
+
+            <label>
+                <p>Назавние: </p>
+                <input type="text" v-model="title">
+            </label>
+            
+            <label>
+                <p>Описание: </p>
+                <textarea v-model="content" cols="100" rows="10"></textarea>
+                <!-- <input type="text" v-model="add.content"> -->
+            </label>
+
+            <label>
+                <p>Автор: </p>
+                <input type="text" v-model="author">
+            </label>
+
+            <label>
+                <p>Ссылка на фото: </p>
+                <input type="text" v-model="path_to_photo">
+            </label>
+
+            <label>
+                <p>Жанр книги: </p>
+                <input type="text" v-model="cat">
+            </label> 
+       
+            <div class='div_btn'><button class="btn" @click="addPost()">Добавить</button></div>
+
         </form>
 
-    </div>
+
 </template>
 
 <script>
+import { useBookStore } from '../stores/bookStore'
     export default {
         data(){
             return{
-                add:{
-                    title: "Игра престолов",
-                    content: "Перед вами — величественное шестикнижие «Песнь льда и огня». Эпическая, чеканная сага о мире Семи Королевств. О мире суровых земель вечного холода и радостных земель вечного лета. Мире лордов и героев, воинов и магов, чернокнижников и убийц — всех, кого свела воедино Судьба во исполнение древнего пророчества. О мире опасных приключений, великих деяний и тончайших политических интриг.",
-                    author: "Джордж Р. Р. Мартин",
-                    path_to_photo: "https://cdn.img-gorod.ru/310x500/nomenclature/21/111/2111187.jpg",
-                    the_year_of_publishing: "06.08.1996",
-                    time_create: "2023-08-05T07:59:37.139993Z",
-                    time_update: "2023-09-11",
-                    visibility: true,
-                    index: 3,
-                    pk: 4,
-                    id: 4,
-                    cat: 1
-                }
+                bookStore: useBookStore(),
+                title: '',
+                content:'',
+                author:'',
+                path_to_photo:'',
+                time_create:'1',
+                cat: '1',
+                id:'1',
+                
             }
         },
         methods:{
@@ -38,15 +56,80 @@
                 await fetch('http://127.0.0.1:8000/api/book/v1/', {
                 method: "POST",
                 headers: {'Content-Type': 'application/json;charset=utf-8'},
-                body: JSON.stringify(this.add)
-            }).then(response => {
-                console.log(response.json())
+                body: JSON.stringify({title: this.title, content: this.content, author: this.author, path_to_photo: this.path_to_photo, time_create: this.time_create, cat: this.cat, id: this.id})
             })
-        }
+        },
     }
 }
 </script>
 
 <style scoped>
+/* Стили для формы */
+.f_inp{
+    display: grid;
+    text-align: center;
+}
+
+/* Стили для тега label */
+label{
+    padding-top: 20px;
+}
+
+/* Стили для тега input */
+input{
+    background-color: rgba(189, 142, 142, 0.9);
+    border-radius: 10px;
+    width: 100%;
+    min-width: 200px;
+    max-width: 500px;
+    height: 20px;
+    font-size: 18px;
+    text-align: center;
+    padding: 10px;
+    border: 2px solid grey;
+}
+
+/* Стили для тега textarea */
+textarea{
+    background-color: rgba(189, 142, 142, 0.9);
+    border-radius: 10px;
+    width: 100%;
+    min-width: 200px;
+    max-width: 500px;
+    height: auto;
+    font-size: 18px;
+    text-align: justify;
+    padding: 10px;
+    border: 2px solid grey;
+}
+
+/* Стили для всех тегов p в включенных в тег label включеный в элемент с классам  f_inp */
+.f_inp>label>p{
+    color: white;
+    font-family: sans-serif;
+    font-size: 30px;
+}
+
+/* Стили для кнопок */
+.div_btn{
+    justify-content: center;
+    margin-top: 20px;
+}
+.btn{
+    border: none;
+    width: 130px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.btn:hover{
+    opacity: 0.7;
+    color: whitesmoke;
+    background-color: rgba(189, 142, 142, 0.9);
+    transition: 0.8s;
+    cursor: pointer;
+}
 
 </style>

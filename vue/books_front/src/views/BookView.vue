@@ -2,21 +2,22 @@
 
     <div class="books">
 
-        <div class="post" v-for="post in bookStore.posts" :key="post.index">
+        <div class="post" v-for="post in bookStore.posts" :key="post.id">
 
             <img class="images" :src="`${post.path_to_photo}`" :alt="`${post.title}`">
 
             <div class="book_title">
 
-                <h1><RouterLink class="props-book" @click="bookStore.test(post.pk)" to='/books/about'>{{ post.title }}</RouterLink></h1>
+                <h1><RouterLink class="props_book" @click="bookStore.test(post.id)" to='/books/about'>{{ post.title }}</RouterLink></h1>
                 <!-- <h1><RouterLink class="props-book" @click="bookStore.prop(post.index)" to='/books/about'>{{ post.title }}</RouterLink></h1> -->
-                <p v-if="post.visibility" class="book_content">{{ post.content }}</p>
+                <p v-if="bookStore.visibility" class="book_content">{{ post.content }}</p>
                 <p class="author">Автор: {{ post.author }}</p>
-                <p class="date">Дата первой публикации: {{ post.the_year_of_publishing }}</p>
+                <p class="date">Дата создания поста: {{ post.time_create }}</p>
 
                 <div class="div-btn">
-                    <button class="btn" @click="bookStore.seen(post.index)">Показать</button>
-                    <button class="btn" @click="bookStore.noSeen(post.index)">Скрыть</button>
+                    <button class="btn" @click="bookStore.seen(post.id)">Показать</button>
+                    <button class="btn" @click="bookStore.noSeen(post.id)">Скрыть</button>
+                    <!-- <RouterLink  to='/addBook' @click="bookStore.test(post.id)">Изменить</RouterLink> -->
                 </div>
 
             </div>
@@ -46,15 +47,13 @@ import { useBookStore } from '../stores/bookStore'
 </script>
 
 <style scoped>
+/* Стили общего контейнера */
 .books{
 padding: 10px;
 }
-.images{
-    width: 250px;
-    height: 300px;
-    object-fit: contain;
-    border-radius: 22%;
-}
+
+
+/* Стили для контента */
 .post{
   width: auto;
   padding: 10px 15px 10px 15px;
@@ -67,13 +66,30 @@ padding: 10px;
   grid-template-columns:200px 1fr;
   column-gap: 50px;
   border-radius: 20px;
+  white-space: normal;
 }
-.props-book{
+
+.images{
+    width: 250px;
+    height: 300px;
+    object-fit: contain;
+    border-radius: 22%;
+}
+
+.book_title{
+    display: flexbox;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 500;
+    width: 100%;
+    height: auto;
+}
+.props_book{
     text-decoration: none;
     color: #e2dc88;
 }
 
-.props-book:hover{
+.props_book:hover{
     opacity: 0.8;
     color: #c9c6a4;
     transition: 0.5s;
@@ -89,18 +105,13 @@ padding: 10px;
     font-weight: bold;
 }
 
-.book_title{
-    display: flexbox;
-    align-items: center;
-    margin-bottom: 10px;
-    font-weight: 500;
-}
-
 .date{
     font-size: 18 px;
     font-weight: bold; 
 }
 
+
+/* Стили для кнопок */
 .div-btn{
     display: flex;
     align-items: center;

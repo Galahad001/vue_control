@@ -2,12 +2,14 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useBookStore = defineStore('book', {
+
   state: () => ({
     posts:[],
     post_pk:[],
     posts_filter:[],
     visibility: true
   }),
+
   actions:{
     async book_data_api(){
         const data = await fetch('http://127.0.0.1:8000/api/book/v1/')
@@ -21,10 +23,11 @@ export const useBookStore = defineStore('book', {
       this.post_pk = data2
       console.log(this.post_pk)
     },
-    seen(id){
-      console.log(id)
 
+    seen(id){
+      const i = this.posts.findIndex(n => n.id == id)
     },
+
     noSeen(id){
       for(i=0; i < this.posts.length; i++){
         if(id == this.posts[i].id){
@@ -32,6 +35,18 @@ export const useBookStore = defineStore('book', {
         }
       }
 
+    },
+
+    delete: async function(id){
+        await fetch(`http://127.0.0.1:8000/api/book/${id}/`, {method: "DELETE"})
+
+        const i = this.posts.findIndex(n => n.id == id)
+        this.posts.splice(i, 1)
+    },
+
+    testos(id){
+      // this.posts.filter(el => el.cat == id)
+      console.log('OK')
     },
 
     addBook(id){

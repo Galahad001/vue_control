@@ -1,6 +1,12 @@
 <template>
 
     <div class="books">
+        <div>
+            <select onchange="te(this.value)">
+                <option value="1">Фэнтези</option>
+                <option value="2">Детектив</option>
+            </select>
+        </div>
 
         <div class="post" v-for="post in bookStore.posts" :key="post.id">
 
@@ -17,7 +23,7 @@
                 <div class="div-btn">
                     <button class="btn" @click="bookStore.seen(post.id)">Показать</button>
                     <button class="btn" @click="bookStore.noSeen(post.id)">Скрыть</button>
-                    <!-- <RouterLink  to='/addBook' @click="bookStore.test(post.id)">Изменить</RouterLink> -->
+                    <button class="btn" @click="del(post.id)">Удалить</button>
                 </div>
 
             </div>
@@ -39,9 +45,20 @@ import { useBookStore } from '../stores/bookStore'
             bookStore: useBookStore()
         };
     },
+
     async mounted() {
-        this.bookStore.book_data_api();
+            this.bookStore.book_data_api();
+        },
+
+    methods:{
+        del(id){
+            this.bookStore.delete(id)
+        },
+        te(id){
+            alert(id)
+        }
     },
+    
     components: { RouterView, AboutComponent }
 }
 </script>
